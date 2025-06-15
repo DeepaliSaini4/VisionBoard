@@ -1,5 +1,5 @@
 
-import { useEffect,useRef, useContext  } from 'react';
+import { useEffect,useRef,useLayoutEffect, useContext  } from 'react';
 import rough from "roughjs";
 import boardContext from '../../store/board-context';
 import { TOOL_ACTION_TYPES } from '../../constants';
@@ -17,7 +17,7 @@ function Board() {
   },[]);
 
   //Re-draw canvas whenever elements change, using RoughJS
-  useEffect(() =>{
+  useLayoutEffect(() =>{
     const canvas = canvasRef.current;//Get the actual canvas element
     const context = canvas.getContext("2d");//Get the drawing context (2D drawing tool)
     context.save();//Save the current state of the canvas

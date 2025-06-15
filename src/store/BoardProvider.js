@@ -1,11 +1,9 @@
 import React, { useReducer } from "react";
 
-
 import boardContext from "./board-context";
 import { BOARD_ACTIONS, TOOL_ACTION_TYPES, TOOL_ITEMS } from "../constants";
 import { PiAlignCenterHorizontalSimpleThin } from "react-icons/pi";
 import { createRoughElement } from "../utils/element";
-
 
 // Reducer to handle board-related actions
 const boardReducer = (state, action) => {
@@ -38,13 +36,15 @@ const boardReducer = (state, action) => {
       const { clientX, clientY } = action.payload;
       const newElements = [...state.elements]; // Clone elements
       const index = state.elements.length - 1; // Get index of last drawn element
-      const {x1, y1} = newElements[index]; 
+      const { x1, y1 } = newElements[index];
       // Update end coordinates of the last element
       if (index < 0) return state; //Prevents crash when nothing has been drawn
       newElements[index].x2 = clientX;
       newElements[index].y2 = clientY;
 
-      const newElement = createRoughElement(index, x1, y1, clientX, clientY, {type: state.activeToolItem});
+      const newElement = createRoughElement(index, x1, y1, clientX, clientY, {
+        type: state.activeToolItem,
+      });
       newElements[index] = newElement;
       return {
         ...state,
@@ -61,7 +61,7 @@ const boardReducer = (state, action) => {
       return state;
   }
 };
-
+ 
 // Initial state of the drawing board
 const initialBoardState = {
   activeToolItem: TOOL_ITEMS.LINE, // Default tool selected (e.g., Line tool)
