@@ -95,7 +95,7 @@ const boardReducer = (state, action) => {
     } // Default: Return current state (no changes)
     case BOARD_ACTIONS.ERASE: {
       const { clientX, clientY } = action.payload;
-      const newElements = [...state.elements];
+      let newElements = [...state.elements];
       newElements = newElements.filter((element) => {
         return !isPointNearElement(element, clientX, clientY); // ! bcoz if it's near, then we've to delete it
       });
@@ -109,7 +109,7 @@ const boardReducer = (state, action) => {
  
 // Initial state of the drawing board
 const initialBoardState = {
-  activeToolItem: TOOL_ITEMS.LINE, // Default tool selected (e.g., Line tool)
+  activeToolItem: TOOL_ITEMS.BRUSH, // Default tool selected (e.g., Line tool)
   toolActionType: TOOL_ACTION_TYPES.NONE,
   elements: [], // Stores all drawn shapes (lines, rectangles, etc.)
 };
@@ -139,9 +139,9 @@ const BoardProvider = ({ children }) => {
         type: BOARD_ACTIONS.CHANGE_ACTION_TYPE,
         payload: {
           actionType: TOOL_ACTION_TYPES.ERASING,
-        }
+        },
       });
-      return;    // if erasing, return from here itself
+      return; // if erasing, return from here itself
     }
     dispatchBoardAction({
       type: BOARD_ACTIONS.DRAW_DOWN,
@@ -182,7 +182,7 @@ const BoardProvider = ({ children }) => {
       type: BOARD_ACTIONS.CHANGE_ACTION_TYPE,
       payload: {
         actionType: TOOL_ACTION_TYPES.NONE,
-      }
+      },
     });
   };
 
