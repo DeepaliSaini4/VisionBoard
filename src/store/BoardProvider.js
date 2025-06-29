@@ -96,27 +96,76 @@ const boardReducer = (state, action) => {
           throw new Error("Type not recognised");
       }
     } // Default: Return current state (no changes)
+ // Push new element state in historyAdd commentMore actions
+    // Don't always push at end, push right after current index (i.e. current_index + 1)
+    // And remove the forward history (if we draw on UNDO, we can't REDO)
+    case BOARD_ACTIONS.DRAW_UP: {
+      const elementsCopy = [...state.elements];
+      const newHistory = state.history.slice(0, state.index + 1);
+      newHistory.push(elementsCopy);
+
+      return {
+        ...state,
+        history: newHistory,
+        index: state.index + 1,
+      };
+    }
+
+    // On ERASE as well, we need to deal with History (bcoz ERASE is equivalent to adding a new state)
+
+
     case BOARD_ACTIONS.ERASE: {
       const { clientX, clientY } = action.payload;
       let newElements = [...state.elements];
       newElements = newElements.filter((element) => {
         return !isPointNearElement(element, clientX, clientY); // ! bcoz if it's near, then we've to delete it
       });
+      const newHistory = state.history.slice(0, state.index + 1);
+      newHistory.push(newElements);
       return {
         ...state,
         elements: newElements,
+        history: newHistory,
+        index: state.index + 1,
       };
     }
+     // I'm creating new element on TEXT as well (not only by DRAWING)
     case BOARD_ACTIONS.CHANGE_TEXT: {
-      const index = state.elements.length-1;
+      const index = state.elements.length - 1;
       const newElements = [...state.elements];
       newElements[index].text = action.payload.text;
+      const newHistory = state.history.slice(0, state.index + 1);
+      newHistory.push(newElements);
       return {
         ...state,
         toolActionType: TOOL_ACTION_TYPES.NONE,    // bcoz i've blurred it now 
         elements: newElements,
-      }
+        history: newHistory,
+        index: state.index + 1,
+      };
     }
+
+    case BOARD_ACTIONS.UNDO: {
+      if (state.index <= 0) return state; // do nothing (if at begining of history)
+
+      return {
+        ...state,
+        elements: state.history[state.index - 1],
+        index: state.index - 1,
+      };
+    }
+
+    case BOARD_ACTIONS.REDO: {
+      if (state.index >= state.history.length - 1) return state; // do nothing (if at end of history)
+
+      return {
+        ...state,
+        elements: state.history[state.index + 1],
+        index: state.index + 1,
+      };
+    }
+    default:
+      return state;
   }
 };
  
@@ -125,6 +174,8 @@ const initialBoardState = {
   activeToolItem: TOOL_ITEMS.BRUSH, // Default tool selected (e.g., Line tool)
   toolActionType: TOOL_ACTION_TYPES.NONE,
   elements: [], // Stores all drawn shapes (lines, rectangles, etc.)
+  history: [[]],
+  index: 0,
 };
 
 const BoardProvider = ({ children }) => {
@@ -197,7 +248,12 @@ const BoardProvider = ({ children }) => {
   };
 
   const boardMouseUpHandler = () => {
-    if(boardState.toolActionType === TOOL_ACTION_TYPES.WRITING) return;
+    if (boardState.toolActionType === TOOL_ACTION_TYPES.WRITING) return;
+    if (boardState.toolActionType === TOOL_ACTION_TYPES.DRAWING) {
+      dispatchBoardAction({
+        type: BOARD_ACTIONS.DRAW_UP,
+      });
+    }
     dispatchBoardAction({
       type: BOARD_ACTIONS.CHANGE_ACTION_TYPE,
       payload: {
@@ -214,7 +270,17 @@ const BoardProvider = ({ children }) => {
       },
     });
   };
+  const boardUndoHandler = () => {
+    dispatchBoardAction({
+      type: BOARD_ACTIONS.UNDO,
+    });
+  };
 
+  const boardRedoHandler = () => {
+    dispatchBoardAction({
+      type: BOARD_ACTIONS.REDO,
+    });
+  };
 
   //context value that other components will use
   const boardContextValue = {
@@ -226,6 +292,8 @@ const BoardProvider = ({ children }) => {
     boardMouseMoveHandler,
     boardMouseUpHandler,
     textAreaBlurHandler,
+    undo: boardUndoHandler,
+    redo: boardRedoHandler,
   };
 
   return (
