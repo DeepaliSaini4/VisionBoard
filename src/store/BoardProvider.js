@@ -38,7 +38,10 @@ const boardReducer = (state, action) => {
       const prevElements = state.elements;
       return {
         ...state,
-        toolActionType: TOOL_ACTION_TYPES.DRAWING,
+        toolActionType:
+        state.activeToolItem === TOOL_ITEMS.TEXT
+          ? TOOL_ACTION_TYPES.WRITING
+          : TOOL_ACTION_TYPES.DRAWING, // On CLICK, change it to "DRAWING"
         elements: [...prevElements, newElement], // Add new element to elements array
       };
     // Action: Continue drawing (on mouse move)
@@ -133,6 +136,11 @@ const BoardProvider = ({ children }) => {
   };
   //Called when user presses mouse down on the board (starts drawing)
   const boardMouseDownHandler = (event, toolboxState) => {
+     // Jab mai dusri baar click kar raha hunAdd commentMore actions
+    // tab mujhe wapas DRAW_DOWN call nahi karna 
+    // tab mai already WRITING state mei hun 
+    if(boardState.toolActionType === TOOL_ACTION_TYPES.WRITING) return;
+    
     const { clientX, clientY } = event; // Get mouse coordinates
     if(boardState.activeToolItem === TOOL_ITEMS.ERASER) {
       dispatchBoardAction({
@@ -157,6 +165,7 @@ const BoardProvider = ({ children }) => {
 
   // Called when the user moves the mouse while pressing down (dragging to draw)
   const boardMouseMoveHandler = (event) => {
+    if(boardState.toolActionType === TOOL_ACTION_TYPES.WRITING) return;
     const { clientX, clientY } = event; // // Get new mouse position
     if (boardState.toolActionType === TOOL_ACTION_TYPES.DRAWING) {
       dispatchBoardAction({
@@ -178,6 +187,7 @@ const BoardProvider = ({ children }) => {
   };
 
   const boardMouseUpHandler = () => {
+    if(boardState.toolActionType === TOOL_ACTION_TYPES.WRITING) return;
     dispatchBoardAction({
       type: BOARD_ACTIONS.CHANGE_ACTION_TYPE,
       payload: {
