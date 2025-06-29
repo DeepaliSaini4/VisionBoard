@@ -1,22 +1,31 @@
 import React, { useReducer } from "react";
 
 import toolboxContext from "./toolbox-context";
-import { COLORS, TOOL_ITEMS } from "../constants";
+import { COLORS, TOOL_ITEMS, TOOLBOX_ACTIONS } from "../constants";
 
 const toolboxReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE_STROKE": {
-      const newState = { ...state };
-      newState[action.payload.tool].stroke = action.payload.stroke;
+    case TOOLBOX_ACTIONS.CHANGE_STROKE: {
+      const newState = {...state }; 
+      newState[action.payload.tool].stroke = action.payload.stroke; 
       return newState;
     }
 
+    case TOOLBOX_ACTIONS.CHANGE_FILL: {
+      const newState = {...state }; 
+      newState[action.payload.tool].fill = action.payload.fill; 
+      return newState; 
+    }
+    case TOOLBOX_ACTIONS.CHANGE_SIZE: {
+      const newState = {...state }; 
+      newState[action.payload.tool].size = action.payload.size;
+      return newState; 
+    }
     default:
       return state;
   }
 };
 
-// Separate object for each tool
 const initialToolboxState = {
   [TOOL_ITEMS.LINE]: {
     stroke: COLORS.BLACK,
@@ -38,7 +47,6 @@ const initialToolboxState = {
   },
 };
 
-// Let's maintain separate toolbox state for each item in toolbar
 const ToolboxProvider = ({ children }) => {
   const [toolboxState, dispatchToolboxAction] = useReducer(
     toolboxReducer,
@@ -47,7 +55,7 @@ const ToolboxProvider = ({ children }) => {
 
   const changeStrokeHandler = (tool, stroke) => {
     dispatchToolboxAction({
-      type: "CHANGE_STROKE",
+      type: TOOLBOX_ACTIONS.CHANGE_STROKE,
       payload: {
         tool,
         stroke,
@@ -55,9 +63,30 @@ const ToolboxProvider = ({ children }) => {
     });
   };
 
+  const changeFillHandler = (tool, fill) => {
+    dispatchToolboxAction({
+      type: TOOLBOX_ACTIONS.CHANGE_FILL,
+      payload: {
+        tool,
+        fill,
+      },
+    });
+  };
+  const changeSizeHandler = (tool, size) => {
+    dispatchToolboxAction({
+      type: TOOLBOX_ACTIONS.CHANGE_SIZE ,
+      payload: {
+        tool,
+        size,
+      },
+    });
+  };
+
   const toolboxContextValue = {
     toolboxState,
     changeStroke: changeStrokeHandler,
+    changeFill: changeFillHandler,
+    changeSize: changeSizeHandler,
   };
 
   return (

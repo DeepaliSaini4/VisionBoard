@@ -2,13 +2,14 @@
 import { useEffect,useRef,useLayoutEffect, useContext  } from 'react';
 import rough from "roughjs";
 import boardContext from '../../store/board-context';
+import toolboxContext from '../../store/toolbox-context';
 import { TOOL_ACTION_TYPES } from '../../constants';
 
 function Board() {
 
   const canvasRef = useRef();//Canvas DOM ref — to draw/update on it directly
   const {elements, boardMouseDownHandler, boardMouseMoveHandler,boardMouseUpHandler,toolActionType} = useContext(boardContext);//Getting board state & mouse functions from context
-
+  const {toolboxState} = useContext(toolboxContext)
   //Set canvas size to full screen once when component mounts
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -35,7 +36,7 @@ function Board() {
 
   //Forward mouse down event to board's handler
     const handleMouseDown =  (event) =>{
-        boardMouseDownHandler(event);
+        boardMouseDownHandler(event, toolboxState);
     };
 
     //Forward mouse move event to board's handler

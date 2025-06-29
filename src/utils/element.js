@@ -2,18 +2,32 @@ import { ARROW_LENGTH, TOOL_ITEMS } from "../constants";
 import rough from "roughjs/bin/rough";
 import { getArrowHeadsCoordinates } from "./math";
 const gen = rough.generator();
-export const createRoughElement = (id, x1, y1, x2, y2, { type }) => {
+export const createRoughElement = (id, x1, y1, x2, y2, { type, stroke, fill, size }) => {
   const element = {
     id,
     x1,
     y1,
     x2,
     y2,
+    type,
+    fill,
+    stroke,
+    size,
   };
   //passing options so that on adjusting the size while drawing new style of rough js is not created or size doesnot buffers
   let options = {
     seed: id + 1, //id cant be 0
+    fillStyle: "solid",
   };
+  if (stroke){
+    options.stroke =  stroke;
+  }
+  if (fill){
+    options.fill = fill;
+  } 
+  if(size) {
+    options.strokeWidth = size;
+  }
   switch (type) {
     case TOOL_ITEMS.LINE:
       element.roughEle = gen.line(x1, y1, x2, y2, options);

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useContext, useReducer } from "react";
 
 import boardContext from "./board-context";
 import { BOARD_ACTIONS, TOOL_ACTION_TYPES, TOOL_ITEMS } from "../constants";
@@ -16,14 +16,14 @@ const boardReducer = (state, action) => {
       };
     // Action: Start drawing (on mouse down)
     case BOARD_ACTIONS.DRAW_DOWN:
-      const { clientX, clientY } = action.payload; //destructuring
+      const { clientX, clientY, stroke, fill, size } = action.payload; //destructuring
       const newElement = createRoughElement(
         state.elements.length,
         clientX,
         clientY,
         clientX,
         clientY,
-        { type: state.activeToolItem }
+        { type: state.activeToolItem, stroke, fill, size }
       );
       const prevElements = state.elements;
       return {
@@ -36,7 +36,7 @@ const boardReducer = (state, action) => {
       const { clientX, clientY } = action.payload;
       const newElements = [...state.elements]; // Clone elements
       const index = state.elements.length - 1; // Get index of last drawn element
-      const { x1, y1 } = newElements[index];
+      const { x1, y1,stroke,fill, size } = newElements[index];
       // Update end coordinates of the last element
       if (index < 0) return state; //Prevents crash when nothing has been drawn
       newElements[index].x2 = clientX;
@@ -44,6 +44,9 @@ const boardReducer = (state, action) => {
 
       const newElement = createRoughElement(index, x1, y1, clientX, clientY, {
         type: state.activeToolItem,
+        stroke,
+        fill,
+        size,
       });
       newElements[index] = newElement;
       return {
@@ -76,6 +79,7 @@ const BoardProvider = ({ children }) => {
     initialBoardState
   );
 
+
   //Called when the user selects a new drawing tool (like pencil, line, rectangle)
   const changeToolHandler = (tool) => {
     dispatchBoardAction({
@@ -86,13 +90,16 @@ const BoardProvider = ({ children }) => {
     });
   };
   //Called when user presses mouse down on the board (starts drawing)
-  const boardMouseDownHandler = (event) => {
+  const boardMouseDownHandler = (event, toolboxState) => {
     const { clientX, clientY } = event; // Get mouse coordinates
     dispatchBoardAction({
       type: BOARD_ACTIONS.DRAW_DOWN,
       payload: {
         clientX,
         clientY,
+        stroke: toolboxState[boardState.activeToolItem]?.stroke,
+        fill: toolboxState[boardState.activeToolItem]?.fill,
+        size: toolboxState[boardState.activeToolItem]?.size,
       },
     });
   };
