@@ -13,6 +13,7 @@ function Board() {
     boardMouseMoveHandler,
     boardMouseUpHandler,
     toolActionType,
+    textAreaBlurHandler,
   } = useContext(boardContext); //Getting board state & mouse functions from context
   const { toolboxState } = useContext(toolboxContext);
   //Set canvas size to full screen once when component mounts
@@ -47,7 +48,11 @@ function Board() {
           break;
 
           case TOOL_ITEMS.TEXT:
-          console.log("Something");
+            context.textBaseline = "top";
+            context.font = `${element.size}px Caveat`;
+            context.fillStyle = element.stroke;
+            context.fillText(element.text, element.x1, element.y1);
+            context.restore();
           break;
 
         default:
@@ -71,6 +76,7 @@ function Board() {
     }
   }, [toolActionType]);
 
+  // On Blur i want to draw it on canvas 
 
   //Forward mouse down event to board's handler
   const handleMouseDown = (event) => {
@@ -99,7 +105,7 @@ function Board() {
           fontSize: `${elements[elements.length - 1]?.size}px`,
           color: elements[elements.length - 1]?.stroke,
         }}
-        // onBlur={(event) => textAreaBlur(event.target.value)}
+        onBlur={(event) => textAreaBlurHandler(event.target.value, toolboxState)}
       />
     )}
     <canvas

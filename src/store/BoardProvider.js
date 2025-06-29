@@ -107,6 +107,16 @@ const boardReducer = (state, action) => {
         elements: newElements,
       };
     }
+    case BOARD_ACTIONS.CHANGE_TEXT: {
+      const index = state.elements.length-1;
+      const newElements = [...state.elements];
+      newElements[index].text = action.payload.text;
+      return {
+        ...state,
+        toolActionType: TOOL_ACTION_TYPES.NONE,    // bcoz i've blurred it now 
+        elements: newElements,
+      }
+    }
   }
 };
  
@@ -195,6 +205,16 @@ const BoardProvider = ({ children }) => {
       },
     });
   };
+   // On Blur i want to draw text out canvas 
+   const textAreaBlurHandler = (text, toolboxState) => {
+    dispatchBoardAction({
+      type: BOARD_ACTIONS.CHANGE_TEXT,
+      payload: {
+        text,
+      },
+    });
+  };
+
 
   //context value that other components will use
   const boardContextValue = {
@@ -205,6 +225,7 @@ const BoardProvider = ({ children }) => {
     boardMouseDownHandler,
     boardMouseMoveHandler,
     boardMouseUpHandler,
+    textAreaBlurHandler,
   };
 
   return (
