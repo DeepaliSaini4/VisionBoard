@@ -6,25 +6,52 @@ import { COLORS, TOOL_ITEMS, TOOLBOX_ACTIONS } from "../constants";
 const toolboxReducer = (state, action) => {
   switch (action.type) {
     case TOOLBOX_ACTIONS.CHANGE_STROKE: {
-      const newState = {...state }; 
-      newState[action.payload.tool].stroke = action.payload.stroke; 
-      return newState;
+      if (!state[action.payload.tool]) {
+        console.warn(`Tool "${action.payload.tool}" not initialized.`);
+        return state; // or initialize it as needed
+      }
+      return {
+        ...state,
+        [action.payload.tool]: {
+          ...state[action.payload.tool],
+          stroke: action.payload.stroke,
+        },
+      };
     }
 
     case TOOLBOX_ACTIONS.CHANGE_FILL: {
-      const newState = {...state }; 
-      newState[action.payload.tool].fill = action.payload.fill; 
-      return newState; 
+      if (!state[action.payload.tool]) {
+        console.warn(`Tool "${action.payload.tool}" not initialized.`);
+        return state;
+      }
+      return {
+        ...state,
+        [action.payload.tool]: {
+          ...state[action.payload.tool],
+          fill: action.payload.fill,
+        },
+      };
     }
+
     case TOOLBOX_ACTIONS.CHANGE_SIZE: {
-      const newState = {...state }; 
-      newState[action.payload.tool].size = action.payload.size;
-      return newState; 
+      if (!state[action.payload.tool]) {
+        console.warn(`Tool "${action.payload.tool}" not initialized.`);
+        return state;
+      }
+      return {
+        ...state,
+        [action.payload.tool]: {
+          ...state[action.payload.tool],
+          size: action.payload.size,
+        },
+      };
     }
+
     default:
       return state;
   }
 };
+
 
 const initialToolboxState = {
   [TOOL_ITEMS.LINE]: {
@@ -45,6 +72,9 @@ const initialToolboxState = {
     stroke: COLORS.BLACK,
     size: 1,
   },
+  [TOOL_ITEMS.BRUSH]: {
+    stroke: COLORS.BLACK,
+  }
 };
 
 const ToolboxProvider = ({ children }) => {

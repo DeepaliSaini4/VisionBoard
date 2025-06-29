@@ -1,8 +1,16 @@
 import { ARROW_LENGTH, TOOL_ITEMS } from "../constants";
 import rough from "roughjs/bin/rough";
-import { getArrowHeadsCoordinates } from "./math";
+import { getArrowHeadsCoordinates, getSvgPathFromStroke } from "./math";
+import getStroke from "perfect-freehand";
 const gen = rough.generator();
-export const createRoughElement = (id, x1, y1, x2, y2, { type, stroke, fill, size }) => {
+export const createRoughElement = (
+  id,
+  x1,
+  y1,
+  x2,
+  y2,
+  { type, stroke, fill, size }
+) => {
   const element = {
     id,
     x1,
@@ -19,13 +27,13 @@ export const createRoughElement = (id, x1, y1, x2, y2, { type, stroke, fill, siz
     seed: id + 1, //id cant be 0
     fillStyle: "solid",
   };
-  if (stroke){
-    options.stroke =  stroke;
+  if (stroke) {
+    options.stroke = stroke;
   }
-  if (fill){
+  if (fill) {
     options.fill = fill;
-  } 
-  if(size) {
+  }
+  if (size) {
     options.strokeWidth = size;
   }
   switch (type) {
@@ -59,6 +67,17 @@ export const createRoughElement = (id, x1, y1, x2, y2, { type, stroke, fill, siz
       ];
       element.roughEle = gen.linearPath(points, options);
       return element;
+    case TOOL_ITEMS.BRUSH: {
+      // Brush ke case mei elements mei points honge (as Array of Objects)
+      const brushElement = {
+        id,
+        points: [{ x: x1, y: y1 }],
+        path: new Path2D(getSvgPathFromStroke(getStroke([{ x: x1, y: y1 }]))), // path bnane ka treka hota hai new Path2D()
+        type,
+        stroke,
+      };
+      return brushElement;
+    }
     default:
       throw new Error("Type not recognized");
   }

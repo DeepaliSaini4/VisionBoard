@@ -3,7 +3,7 @@ import { useEffect,useRef,useLayoutEffect, useContext  } from 'react';
 import rough from "roughjs";
 import boardContext from '../../store/board-context';
 import toolboxContext from '../../store/toolbox-context';
-import { TOOL_ACTION_TYPES } from '../../constants';
+import { TOOL_ACTION_TYPES,TOOL_ITEMS } from '../../constants';
 
 function Board() {
 
@@ -26,7 +26,24 @@ function Board() {
 
     //Draw each element using RoughJS
     elements.forEach(element => {
-      roughCanvas.draw(element.roughEle);
+      switch (element.type) {
+        case TOOL_ITEMS.LINE:
+        case TOOL_ITEMS.ARROW:
+        case TOOL_ITEMS.CIRCLE:
+        case TOOL_ITEMS.RECTANGLE:
+          roughCanvas.draw(element.roughEle); // draw expects element as an object
+          break;
+
+        // Don't use rough library in case of BRUSH tool 
+        case TOOL_ITEMS.BRUSH:
+          context.fillStyle = element.stroke;
+          context.fill(element.path);
+          context.restore();    // Bcoz jab mai fillStyle change krunga toh har cheez ki fillStyle change hojayegi
+          break;
+
+        default:
+          throw new Error("Type not recognised");
+      }
     });
 
     return () => {
