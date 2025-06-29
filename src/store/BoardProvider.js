@@ -4,7 +4,7 @@ import boardContext from "./board-context";
 import { BOARD_ACTIONS, TOOL_ACTION_TYPES, TOOL_ITEMS } from "../constants";
 import { PiAlignCenterHorizontalSimpleThin } from "react-icons/pi";
 import { createRoughElement } from "../utils/element";
-import { getSvgPathFromStroke } from "../utils/math";
+import { getSvgPathFromStroke,isPointNearElement } from "../utils/math";
 import getStroke from "perfect-freehand";
 
 // Reducer to handle board-related actions
@@ -16,6 +16,14 @@ const boardReducer = (state, action) => {
         ...state,
         activeToolItem: action.payload.tool,
       };
+
+    case BOARD_ACTIONS.CHANGE_ACTION_TYPE: {
+      return {
+        ...state,
+        toolActionType: action.payload.actionType,
+      };
+    }
+
     // Action: Start drawing (on mouse down)
     case BOARD_ACTIONS.DRAW_DOWN:
       const { clientX, clientY, stroke, fill, size } = action.payload; //destructuring
@@ -85,14 +93,17 @@ const boardReducer = (state, action) => {
           throw new Error("Type not recognised");
       }
     } // Default: Return current state (no changes)
-    case BOARD_ACTIONS.DRAW_UP: {
+    case BOARD_ACTIONS.ERASE: {
+      const { clientX, clientY } = action.payload;
+      const newElements = [...state.elements];
+      newElements = newElements.filter((element) => {
+        return !isPointNearElement(element, clientX, clientY); // ! bcoz if it's near, then we've to delete it
+      });
       return {
         ...state,
-        toolActionType: TOOL_ACTION_TYPES.NONE,
+        elements: newElements,
       };
     }
-    default:
-      return state;
   }
 };
  
@@ -123,6 +134,15 @@ const BoardProvider = ({ children }) => {
   //Called when user presses mouse down on the board (starts drawing)
   const boardMouseDownHandler = (event, toolboxState) => {
     const { clientX, clientY } = event; // Get mouse coordinates
+    if(boardState.activeToolItem === TOOL_ITEMS.ERASER) {
+      dispatchBoardAction({
+        type: BOARD_ACTIONS.CHANGE_ACTION_TYPE,
+        payload: {
+          actionType: TOOL_ACTION_TYPES.ERASING,
+        }
+      });
+      return;    // if erasing, return from here itself
+    }
     dispatchBoardAction({
       type: BOARD_ACTIONS.DRAW_DOWN,
       payload: {
@@ -138,18 +158,31 @@ const BoardProvider = ({ children }) => {
   // Called when the user moves the mouse while pressing down (dragging to draw)
   const boardMouseMoveHandler = (event) => {
     const { clientX, clientY } = event; // // Get new mouse position
-    dispatchBoardAction({
-      type: BOARD_ACTIONS.DRAW_MOVE,
-      payload: {
-        clientX,
-        clientY,
-      },
-    });
+    if (boardState.toolActionType === TOOL_ACTION_TYPES.DRAWING) {
+      dispatchBoardAction({
+        type: BOARD_ACTIONS.DRAW_MOVE,
+        payload: {
+          clientX,
+          clientY,
+        },
+      });
+    } else if (boardState.toolActionType === TOOL_ACTION_TYPES.ERASING) {
+      dispatchBoardAction({
+        type: BOARD_ACTIONS.ERASE,
+        payload: {
+          clientX,
+          clientY,
+        },
+      });
+    }
   };
 
   const boardMouseUpHandler = () => {
     dispatchBoardAction({
-      type: BOARD_ACTIONS.DRAW_UP,
+      type: BOARD_ACTIONS.CHANGE_ACTION_TYPE,
+      payload: {
+        actionType: TOOL_ACTION_TYPES.NONE,
+      }
     });
   };
 
