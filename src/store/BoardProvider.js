@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, {useCallback, useContext, useReducer } from "react";
 
 import boardContext from "./board-context";
 import { BOARD_ACTIONS, TOOL_ACTION_TYPES, TOOL_ITEMS } from "../constants";
@@ -270,17 +270,19 @@ const BoardProvider = ({ children }) => {
       },
     });
   };
-  const boardUndoHandler = () => {
+   // wrap both with useCallback to handle their "Referential Equality"
+  // Bcoz they're getting passed in handleKeyDown() in index.js of Board
+  const boardUndoHandler = useCallback(() => {
     dispatchBoardAction({
       type: BOARD_ACTIONS.UNDO,
     });
-  };
+},[]);
 
-  const boardRedoHandler = () => {
+const boardRedoHandler = useCallback(() => {
     dispatchBoardAction({
       type: BOARD_ACTIONS.REDO,
     });
-  };
+  }, []);
 
   //context value that other components will use
   const boardContextValue = {

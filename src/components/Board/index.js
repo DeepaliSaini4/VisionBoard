@@ -14,6 +14,8 @@ function Board() {
     boardMouseUpHandler,
     toolActionType,
     textAreaBlurHandler,
+    undo,
+    redo,
   } = useContext(boardContext); //Getting board state & mouse functions from context
   const { toolboxState } = useContext(toolboxContext);
   //Set canvas size to full screen once when component mounts
@@ -23,6 +25,22 @@ function Board() {
     canvas.height = window.innerHeight;
   }, []);
 
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.ctrlKey && event.key === "z") {
+        undo();
+      } else if (event.ctrlKey && event.key === "y") {
+        redo();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    // At time of unmount, always use CLEANUP function (to avoid unexpected behaviour)
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [undo, redo]); // wrap both with useCallback to handle their "Referential Equality"
   //Re-draw canvas whenever elements change, using RoughJS
   useLayoutEffect(() => {
     const canvas = canvasRef.current; //Get the actual canvas element
