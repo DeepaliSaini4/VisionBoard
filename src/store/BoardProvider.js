@@ -262,7 +262,7 @@ const BoardProvider = ({ children }) => {
     });
   };
    // On Blur i want to draw text out canvas 
-   const textAreaBlurHandler = (text, toolboxState) => {
+   const textAreaBlurHandler = (text) => {
     dispatchBoardAction({
       type: BOARD_ACTIONS.CHANGE_TEXT,
       payload: {
