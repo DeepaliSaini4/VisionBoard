@@ -136,35 +136,6 @@ npm run dev
 
 
 
-## Contributing
-
-Contributions are welcome. Follow these steps:
-
-1. Fork the repository
-2. Create a new branch:
-
-```bash
-git checkout -b feature/YourFeatureName
-```
-
-3. Commit changes:
-
-```bash
-git commit -m "Add YourFeatureName"
-```
-
-4. Push the branch:
-
-```bash
-git push origin feature/YourFeatureName
-```
-
-5. Open a Pull Request
-
-
-
-
-
 ## Contact
 
 **Deepali Saini**
