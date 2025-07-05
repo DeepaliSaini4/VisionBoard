@@ -1,70 +1,168 @@
-# Getting Started with Create React App
+# VisionBoard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**VisionBoard** is a dynamic, feature-rich whiteboard application built with React and HTML5 Canvas. It enables real-time drawing, sketching, and design work, providing users with an intuitive interface and advanced creative tools.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+### Multiple Drawing Tools
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Line tool with customizable stroke
+* Rectangle and ellipse shapes
+* Arrow tool for annotations
+* Freehand brush for natural drawing
+* Text tool with adjustable positioning
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Advanced Editing Capabilities
 
-### `npm test`
+* Eraser tool with precision control
+* Undo/Redo functionality
+* Color picker for custom colors
+* Adjustable stroke width
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### User-Friendly Interface
 
-### `npm run build`
+* Clean, intuitive toolbar
+* Responsive canvas design
+* Download functionality for saving work
+* Smooth drawing experience
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* **Frontend Framework**: React.js
+* **Styling**: Tailwind CSS
+* **Drawing Libraries**:
 
-### `npm run eject`
+  * Perfect Freehand (smooth, natural brush strokes)
+  * Rough.js (hand-drawn, sketchy graphics)
+* **State Management**: React Context API
+* **Deployment**: Vercel
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **Clone the repository:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   git clone https://github.com/yourusername/visionboard.git
+   ```
 
-## Learn More
+2. **Navigate to the project directory:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   cd visionboard
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. **Install dependencies:**
 
-### Code Splitting
+   ```bash
+   npm install
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+4. **Start the development server:**
 
-### Analyzing the Bundle Size
+   ```bash
+   npm run dev
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Select a tool from the toolbar (line, rectangle, ellipse, arrow, brush, or text)
+2. Choose your desired color using the color picker
+3. Click and drag on the canvas to draw
+4. Use the eraser tool to remove elements
+5. Use undo/redo to manage changes
+6. Download your artwork when done
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Implementation Details
 
-### Deployment
+* Custom state management using React's `Context API` and `useReducer`
+* `useLayoutEffect` for synchronous DOM updates in shape rendering
+* Handled complex mouse event logic for seamless drawing
+* Integrated Rough.js for sketch-style rendering
+* Used Perfect Freehand for natural brush strokes
+* Managed tool states using a dedicated ToolActionType system
+* Built history state for full undo/redo support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## Recent Updates
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Download functionality added
+* Enhanced color picker UI
+* Improved text erasing using `measureText`
+* Implemented undo/redo system
+* Enhanced brush tool with stroke options
+
+---
+
+## Future Scope
+
+### Real-Time Collaboration
+
+* WebSocket support for live multi-user sessions
+* User cursors and presence indicators
+* Integrated chat for collaboration
+* Room-based drawing system
+
+### Enhanced Features
+
+* Shape manipulation (resize, rotate, move)
+* Layering system
+* Custom templates and stickers
+* Cloud board storage
+* Export support (PNG, SVG, PDF)
+
+### User Management
+
+* User authentication
+* Personal dashboard with saved boards
+* Sharing and permission controls
+* Team creation and board organization
+
+---
+
+## Contributing
+
+Contributions are welcome. To contribute:
+
+1. Fork the repository
+2. Create a new branch:
+
+   ```bash
+   git checkout -b feature/YourFeatureName
+   ```
+3. Commit your changes:
+
+   ```bash
+   git commit -m 'Add YourFeatureName'
+   ```
+4. Push the branch:
+
+   ```bash
+   git push origin feature/YourFeatureName
+   ```
+5. Open a Pull Request
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Contact
+
+**Deepali Saini**
+GitHub: [DeepaliSaini4](https://github.com/DeepaliSaini4)
+Project Link: [https://github.com/DeepaliSaini4/VisionBoard](https://github.com/DeepaliSaini4/VisionBoard.git)
+
