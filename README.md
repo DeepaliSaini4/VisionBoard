@@ -2,13 +2,13 @@
 
 **VisionBoard** is a dynamic, feature-rich whiteboard application built with React and HTML5 Canvas. It enables intuitive drawing, sketching, and collaborative design, making it suitable for professionals, educators, and teams seeking a streamlined digital canvas.
 
----
+
 
 ## Live Demo
 
 Access the live application: [https://visionboard.vercel.app](https://visionboard-rho.vercel.app/)
 
----
+
 
 ## Features
 
@@ -34,7 +34,7 @@ Access the live application: [https://visionboard.vercel.app](https://visionboar
 * Download option for saving artwork
 * Smooth drawing experience
 
----
+
 
 ## Technology Stack
 
@@ -47,7 +47,7 @@ Access the live application: [https://visionboard.vercel.app](https://visionboar
 * **State Management:** React Context API
 * **Deployment:** Vercel
 
----
+
 
 ## Installation
 
@@ -75,7 +75,7 @@ npm install
 npm run dev
 ```
 
----
+
 
 ## Usage
 
@@ -86,7 +86,7 @@ npm run dev
 * Use undo/redo functionality to manage changes
 * Download your artwork when finished
 
----
+
 
 ## Implementation Details
 
@@ -98,7 +98,7 @@ npm run dev
 * Organized tool logic with a dedicated `ToolActionType` system
 * Implemented a history management system for undo/redo support
 
----
+
 
 ## Recent Updates
 
@@ -108,7 +108,7 @@ npm run dev
 * Integrated a robust undo/redo system
 * Enhanced brush tool with additional stroke options
 
----
+
 
 ## Future Scope
 
@@ -134,7 +134,7 @@ npm run dev
 * Board sharing with permissions control
 * Team organization features
 
----
+
 
 ## Contributing
 
@@ -161,13 +161,13 @@ git push origin feature/YourFeatureName
 
 5. Open a Pull Request
 
----
+
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
----
+
 
 ## Contact
 
