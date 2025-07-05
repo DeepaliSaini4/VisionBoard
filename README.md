@@ -6,7 +6,7 @@
 
 ## Live Demo
 
-Access the live application: [https://visionboard.vercel.app](https://visionboard-rho.vercel.app/)
+Access the live application: [https://visionboard-rho.vercel.app/](https://visionboard-rho.vercel.app/)
 
 
 
@@ -174,5 +174,5 @@ This project is licensed under the [MIT License](LICENSE).
 **Deepali Saini**
 GitHub: [DeepaliSaini4](https://github.com/DeepaliSaini4)
 Repository: [VisionBoard](https://github.com/DeepaliSaini4/VisionBoard)
-Live Link: [https://visionboard.vercel.app](https://visionboard-rho.vercel.app/)
+Live Link: [https://visionboard-rho.vercel.app/](https://visionboard-rho.vercel.app/)
 
