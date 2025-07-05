@@ -1,12 +1,18 @@
 # VisionBoard
 
-**VisionBoard** is a dynamic, feature-rich whiteboard application built with React and HTML5 Canvas. It enables real-time drawing, sketching, and design work, providing users with an intuitive interface and advanced creative tools.
+**VisionBoard** is a dynamic, feature-rich whiteboard application built with React and HTML5 Canvas. It enables intuitive drawing, sketching, and collaborative design, making it suitable for professionals, educators, and teams seeking a streamlined digital canvas.
+
+---
+
+## Live Demo
+
+Access the live application: [https://visionboard.vercel.app](https://visionboard-rho.vercel.app/)
 
 ---
 
 ## Features
 
-### Multiple Drawing Tools
+### Drawing Tools
 
 * Line tool with customizable stroke
 * Rectangle and ellipse shapes
@@ -14,93 +20,93 @@
 * Freehand brush for natural drawing
 * Text tool with adjustable positioning
 
-### Advanced Editing Capabilities
+### Editing Capabilities
 
-* Eraser tool with precision control
+* Precision eraser tool
 * Undo/Redo functionality
-* Color picker for custom colors
+* Color picker with custom color options
 * Adjustable stroke width
 
-### User-Friendly Interface
+### User Experience
 
-* Clean, intuitive toolbar
-* Responsive canvas design
-* Download functionality for saving work
+* Clean and intuitive toolbar
+* Fully responsive canvas
+* Download option for saving artwork
 * Smooth drawing experience
 
 ---
 
-## Tech Stack
+## Technology Stack
 
-* **Frontend Framework**: React.js
-* **Styling**: Tailwind CSS
-* **Drawing Libraries**:
+* **Frontend Framework:** React.js
+* **Styling:** Tailwind CSS
+* **Drawing Libraries:**
 
   * Perfect Freehand (smooth, natural brush strokes)
-  * Rough.js (hand-drawn, sketchy graphics)
-* **State Management**: React Context API
-* **Deployment**: Vercel
+  * Rough.js (sketch-style graphics)
+* **State Management:** React Context API
+* **Deployment:** Vercel
 
 ---
 
 ## Installation
 
-1. **Clone the repository:**
+1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/yourusername/visionboard.git
-   ```
+```bash
+git clone https://github.com/DeepaliSaini4/VisionBoard.git
+```
 
-2. **Navigate to the project directory:**
+2. Navigate into the project folder:
 
-   ```bash
-   cd visionboard
-   ```
+```bash
+cd VisionBoard
+```
 
-3. **Install dependencies:**
+3. Install dependencies:
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-4. **Start the development server:**
+4. Start the development server:
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
 ---
 
 ## Usage
 
-1. Select a tool from the toolbar (line, rectangle, ellipse, arrow, brush, or text)
-2. Choose your desired color using the color picker
-3. Click and drag on the canvas to draw
-4. Use the eraser tool to remove elements
-5. Use undo/redo to manage changes
-6. Download your artwork when done
+* Select a tool from the toolbar (line, rectangle, ellipse, arrow, brush, or text)
+* Choose your preferred color using the color picker
+* Click and drag on the canvas to create drawings
+* Use the eraser tool to remove elements
+* Use undo/redo functionality to manage changes
+* Download your artwork when finished
 
 ---
 
 ## Implementation Details
 
-* Custom state management using React's `Context API` and `useReducer`
-* `useLayoutEffect` for synchronous DOM updates in shape rendering
-* Handled complex mouse event logic for seamless drawing
-* Integrated Rough.js for sketch-style rendering
-* Used Perfect Freehand for natural brush strokes
-* Managed tool states using a dedicated ToolActionType system
-* Built history state for full undo/redo support
+* Custom state management with React's `Context API` and `useReducer`
+* Utilized `useLayoutEffect` for synchronized shape rendering
+* Comprehensive mouse event handling for fluid drawing
+* Integrated Rough.js for creating sketch-style graphics
+* Implemented Perfect Freehand for realistic brush strokes
+* Organized tool logic with a dedicated `ToolActionType` system
+* Implemented a history management system for undo/redo support
 
 ---
 
 ## Recent Updates
 
-* Download functionality added
-* Enhanced color picker UI
-* Improved text erasing using `measureText`
-* Implemented undo/redo system
-* Enhanced brush tool with stroke options
+* Added download functionality
+* Improved color picker interface
+* Corrected text erasing logic with `measureText`
+* Integrated a robust undo/redo system
+* Enhanced brush tool with additional stroke options
 
 ---
 
@@ -108,48 +114,51 @@
 
 ### Real-Time Collaboration
 
-* WebSocket support for live multi-user sessions
-* User cursors and presence indicators
-* Integrated chat for collaboration
-* Room-based drawing system
+* Integration of WebSocket for live multi-user sessions
+* User cursor and presence indicators
+* Built-in collaborative chat
+* Room-based collaboration setup
 
 ### Enhanced Features
 
-* Shape manipulation (resize, rotate, move)
-* Layering system
+* Shape manipulation (move, resize, rotate)
+* Layered canvas system
 * Custom templates and stickers
-* Cloud board storage
-* Export support (PNG, SVG, PDF)
+* Cloud storage integration
+* Exporting options (PNG, SVG, PDF)
 
 ### User Management
 
 * User authentication
-* Personal dashboard with saved boards
-* Sharing and permission controls
-* Team creation and board organization
+* Personal dashboard to manage boards
+* Board sharing with permissions control
+* Team organization features
 
 ---
 
 ## Contributing
 
-Contributions are welcome. To contribute:
+Contributions are welcome. Follow these steps:
 
 1. Fork the repository
 2. Create a new branch:
 
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-3. Commit your changes:
+```bash
+git checkout -b feature/YourFeatureName
+```
 
-   ```bash
-   git commit -m 'Add YourFeatureName'
-   ```
+3. Commit changes:
+
+```bash
+git commit -m "Add YourFeatureName"
+```
+
 4. Push the branch:
 
-   ```bash
-   git push origin feature/YourFeatureName
-   ```
+```bash
+git push origin feature/YourFeatureName
+```
+
 5. Open a Pull Request
 
 ---
@@ -164,5 +173,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Deepali Saini**
 GitHub: [DeepaliSaini4](https://github.com/DeepaliSaini4)
-Project Link: [https://github.com/DeepaliSaini4/VisionBoard](https://github.com/DeepaliSaini4/VisionBoard.git)
+Repository: [VisionBoard](https://github.com/DeepaliSaini4/VisionBoard)
+Live Link: [https://visionboard.vercel.app](https://visionboard-rho.vercel.app/)
 
