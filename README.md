@@ -163,10 +163,6 @@ git push origin feature/YourFeatureName
 
 
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 
 
 ## Contact
